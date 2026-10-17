@@ -8,22 +8,22 @@ namespace game_câu_cá
 
     public partial class Form1
     {
-    
+
         bool helpOpen = false;
         string lastMessage = "";
         int toastTicks = 0;
-        const int ToastTime = 240;         
+        const int ToastTime = 240;
 
         Font fontMoney = new Font("Arial", 18, FontStyle.Bold);
         Pen cogPen = new Pen(Color.White, 5);
         Pen sunPen = new Pen(Color.Gold, 2);
         Pen dropPen = new Pen(Color.FromArgb(120, 190, 255), 2);
 
-    
-        Rectangle WeatherBox { get { return new Rectangle(ClientSize.Width / 2 - 115, 10, 230, 46); } }          
-        Rectangle MoneyBox { get { return new Rectangle(8, ClientSize.Height - 86, 250, 78); } }                 
-        Rectangle HelpIconRect { get { return new Rectangle(ClientSize.Width - 118, 10, 46, 46); } }             
-        Rectangle CogIconRect { get { return new Rectangle(ClientSize.Width - 62, 10, 46, 46); } }             
+
+        Rectangle WeatherBox { get { return new Rectangle(ClientSize.Width / 2 - 115, 10, 230, 46); } }
+        Rectangle MoneyBox { get { return new Rectangle(8, ClientSize.Height - 86, 250, 78); } }
+        Rectangle HelpIconRect { get { return new Rectangle(ClientSize.Width - 118, 10, 46, 46); } }
+        Rectangle CogIconRect { get { return new Rectangle(ClientSize.Width - 62, 10, 46, 46); } }
 
         Rectangle HelpPanel { get { return new Rectangle(ClientSize.Width / 2 - 430, ClientSize.Height / 2 - 280, 860, 560); } }
         Rectangle HelpClose { get { return new Rectangle(HelpPanel.Right - 40, HelpPanel.Y + 10, 28, 28); } }
@@ -56,7 +56,7 @@ namespace game_câu_cá
             g.DrawRectangle(Pens.White, r);
         }
 
-    
+
         void DrawMoneyBox(Graphics g)
         {
             Rectangle r = MoneyBox;
@@ -72,7 +72,7 @@ namespace game_câu_cá
             g.DrawString("Depth: " + depthM + " m (" + zoneText + ")", fontSmall, Brushes.LightGray, r.X + 10, r.Y + 56);
         }
 
-  
+
         void DrawWeatherBox(Graphics g)
         {
             Rectangle r = WeatherBox;
@@ -119,7 +119,7 @@ namespace game_câu_cá
             g.FillRectangle(b, cx - 10, cy + 1, 20, 8);
         }
 
-  
+
         void DrawIconButton(Graphics g, Rectangle r, bool help)
         {
             bool hover = r.Contains(mousePos);
@@ -142,10 +142,10 @@ namespace game_câu_cá
             }
         }
 
-     
+
         void DrawToast(Graphics g)
         {
-            if (toastTicks <= 0 || message == "" || shopOpen) return;   
+            if (toastTicks <= 0 || message == "" || shopOpen) return;
 
             float a = Math.Min(1f, toastTicks / 40f);
             SizeF sz = g.MeasureString(message, fontHud, 900);
@@ -207,6 +207,35 @@ namespace game_câu_cá
 
             g.DrawString("Esc / Enter / H to close", fontTiny, Brushes.LightGray,
                          new Rectangle(p.X, p.Bottom - 26, p.Width, 18), centerFmt);
+        }
+        Rectangle WorldEventBox
+        {
+            get { return new Rectangle(ClientSize.Width - 270, 85, 250, 100); }
+        }
+
+        void DrawWorldEventBox(Graphics g)
+        {
+            Rectangle r = WorldEventBox;
+            using (SolidBrush bg = new SolidBrush(Color.FromArgb(220, 18, 22, 36)))
+                g.FillRectangle(bg, r);
+
+            using (Pen border = new Pen(Color.White, 2))
+                g.DrawString(
+                "Sự kiện",
+                fontRow,
+                Brushes.Gold,
+                r.X + 10,
+                r.Y + 8
+            );
+            g.DrawString(
+                "Events: Không có",
+                fontSmall,
+                Brushes.White,
+                r.X + 10,
+                r.Y + 38
+            );
+
+            
         }
     }
 }

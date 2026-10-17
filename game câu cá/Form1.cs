@@ -12,18 +12,16 @@ namespace game_câu_cá
 {
     public partial class Form1 : Form
     {
-        const bool Dev = true;
-
-        const int ViewW = 1600;
-        const int WorldW = 7000;
+        const bool Dev = false;   
+        const int ViewW = 1600;               
+        const int WorldW = 7000;        
         const int ScreenH = 680;
-        const int WaterTop = 560;
+        const int WaterTop = 560;             
         const int DockTop = WaterTop - 25;
-        const int DockW = 720;
+        const int DockW = 720;              
         const int HookSize = 12;
         const int LeftLimit = 10;
         const int RightLimit = WorldW - 80;
-
         const int ZoneCount = 4;
         int[] zoneScreens = { 3, 4, 6, 12 };
         string[] zoneNames = { "Surface", "Mid", "Deep", "Abyss" };
@@ -34,15 +32,14 @@ namespace game_câu_cá
             Color.FromArgb(25, 50, 160),
             Color.FromArgb(10, 20, 70)
         };
-        int[] zoneTop = new int[ZoneCount + 1];
-
-        const int Solo = 0;
-        const int School = 1;
-        const int Hunter = 2;
+        int[] zoneTop = new int[ZoneCount + 1];   
+        const int Solo = 0;      
+        const int School = 1;    
+        const int Hunter = 2;    
 
         Species[][] zoneSpecies =
         {
-            new[] {
+            new[] {  
                 new Species("Minnow",   10, Color.Silver,         2.8f, 0.5f, School),
                 new Species("Sardine",  9,  Color.LightSteelBlue, 3.2f, 0.3f, School),
                 new Species("Guppy",    8,  Color.Violet,         3.0f, 0.2f, School),
@@ -50,7 +47,7 @@ namespace game_câu_cá
                 new Species("Perch",    14, Color.YellowGreen,    2.4f, 2f,   Solo),
                 new Species("Goldfish", 13, Color.DarkOrange,     1.8f, 1.5f, Solo),
                 new Species("Bluegill", 12, Color.DeepSkyBlue,    2.6f, 1f,   Solo) },
-            new[] {
+            new[] {  
                 new Species("Bass",     18, Color.OliveDrab,      2.4f, 6f,   Solo),
                 new Species("Trout",    17, Color.LightSeaGreen,  2.6f, 5f,   School),
                 new Species("Salmon",   22, Color.Salmon,         2.0f, 10f,  School),
@@ -58,7 +55,7 @@ namespace game_câu_cá
                 new Species("Pike",     24, Color.DarkOliveGreen, 2.8f, 12f,  Hunter),
                 new Species("Catfish",  20, Color.Sienna,         1.6f, 9f,   Solo),
                 new Species("Snapper",  19, Color.IndianRed,      2.2f, 7f,   Solo) },
-            new[] {
+            new[] { 
                 new Species("Tuna",      28, Color.SteelBlue,      2.6f, 30f, School),
                 new Species("Mahi",      26, Color.MediumSeaGreen, 2.8f, 25f, School),
                 new Species("Swordfish", 32, Color.DarkTurquoise,  3.0f, 60f, Hunter),
@@ -66,7 +63,7 @@ namespace game_câu_cá
                 new Species("Grouper",   30, Color.SandyBrown,     1.8f, 45f, Solo),
                 new Species("Barracuda", 28, Color.LightSlateGray, 3.4f, 35f, Hunter),
                 new Species("Manta",     40, Color.DarkSlateBlue,  1.6f, 80f, Solo) },
-            new[] {
+            new[] {  
                 new Species("Anglerfish", 30, Color.MediumPurple, 1.8f, 50f,  Solo,   60),
                 new Species("Viperfish",  26, Color.DarkCyan,     2.4f, 30f,  Solo,   60),
                 new Species("Fangtooth",  22, Color.SlateGray,    2.0f, 25f,  Solo,   90),
@@ -76,17 +73,13 @@ namespace game_câu_cá
         };
 
         Species legendary = new Species("Legendary Fish", 36, Color.Gold, 1.8f, 200f, Solo, 300);
-
-        int[] fishPerZone = { 450, 200, 100, 0 };
-        int[] baseCount = new int[ZoneCount];
-
+        int[] fishPerZone = { 450, 200, 100, 0 };      
+        int[] baseCount = new int[ZoneCount];      
         const int AbyssActive = 10;
-        int[] abyssCounts = { 8, 7, 5, 4, 4, 1 };
-        const int CdDiv = Dev ? 6 : 1;
-
+        int[] abyssCounts = { 8, 7, 5, 4, 4, 1 };   
+        const int CdDiv = Dev ? 6 : 1;              
         float[] spawnGap = { 55f, 70f, 100f, 200f };
         const int CellSize = 70;
-
         Dictionary<string, int> fishPrice = new Dictionary<string, int>
         {
             { "Minnow", 3 },  { "Sardine", 3 }, { "Guppy", 3 },
@@ -99,36 +92,24 @@ namespace game_câu_cá
             { "Gulper Eel", 1300 }, { "Hammerhead", 1700 }, { "Oarfish", 2100 },
             { "Legendary Fish", 8000 }
         };
-
         const float HuntRange = 420f;
-        const float PreyMaxRatio = 0.5f;
-
+        const float PreyMaxRatio = 0.5f;   
         int[] jellyCount = { 18, 35, 44, 35 };
         int[] mineCount = { 0, 22, 13, 9 };
-        const int HazardCap = 10;
-        const int HitImmunity = 90;
+        const int HazardCap = 10;         
+        const int HitImmunity = 90;        
         const int JellyW = 40, JellyH = 50;
         const int MineW = JellyW * 2, MineH = JellyH * 2;
-
-        const float CliffSkipChance = 0.4f;
-        float[] coralChance = { 0.9f, 0.7f, 0.4f, 0.2f };
+        const float CliffSkipChance = 0.4f;           float[] coralChance = { 0.9f, 0.7f, 0.4f, 0.2f };
         Color[] coralColors = { Color.HotPink, Color.Coral, Color.MediumOrchid, Color.LightSalmon, Color.Tomato };
         const float CoralBiteChance = 0.05f;
         const float CoralBiteValueLeft = 0.75f;
-
         const int ChestW = 44, ChestH = 32;
-        const float RockChestChance = 0.20f;
-        const float SeabedChestChance = 0.30f;
-        const float RockChestPercent = 0.10f;
-        int[] rockChestCap = { 1500, 3500, 7000, 10000 };
-
-        const float BaseLine = 200f;
+        const float RockChestChance = 0.20f;             const float SeabedChestChance = 0.30f;           const float RockChestPercent = 0.10f;                      int[] rockChestCap = { 1500, 3500, 7000, 10000 };          const float BaseLine = 200f;
         const int MaxUpgrades = 30;
-
         const int GlowPrice = 5000;
         const float GlowRadius = 240f;
         const float BaseLightRadius = 80f;
-
         string[] rodNames =
         {
             "Basic Rod", "Bamboo Rod", "Fiberglass Rod", "Graphite Rod", "Carbon Rod",
@@ -136,21 +117,12 @@ namespace game_câu_cá
         };
         float[] rodCapacity = { 10f, 20f, 35f, 60f, 100f, 150f, 220f, 320f, 450f, 700f };
         int[] rodPrice = { 0, 150, 500, 1500, 4000, 10000, 25000, 60000, 150000, 400000 };
-        int[] rodMinZone = { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2 };
-        const float MinWeightFrac = 0.02f;
-
-        const int BoatPrice = 1000;
+        int[] rodMinZone = { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2 };           const float MinWeightFrac = 0.02f;                               const int BoatPrice = 1000;
         const int BoatW = 160;
         const float BoatSpeed = 5f;
-        const int MooredX = DockW + 5;
-        const float BoatCapMul = 1.5f;
-        const int BoatExtraSlots = 3;
-        const int NearEnd = 1500;
-        const int MidEnd = 4200;
+        const int MooredX = DockW + 5;                    const float BoatCapMul = 1.5f;                    const int BoatExtraSlots = 3;                     const int NearEnd = 1500;                         const int MidEnd = 4200;
         const float NearMul = 0.6f, MidMul = 1.0f, FarMul = 1.6f;
-        const float RoamChance = 0.03f;
-
-        string[] predNames = { "Piranha", "Eel", "Shark", "???" };
+        const float RoamChance = 0.03f;                   string[] predNames = { "Piranha", "Eel", "Shark", "???" };
         float[] predSpeed = { 9f, 5f, 7f, 6f };
         int[] predW = { 30, 60, 80, 100 };
         int[] predH = { 16, 14, 30, 40 };
@@ -158,20 +130,12 @@ namespace game_câu_cá
         const int PredDiv = Dev ? 12 : 1;
         const int WarnTime = Dev ? 60 : 180;
         const int GraceTime = 300;
-        const int PredChaseTicks = 300;
-        const float PredTrackSpeed = 0.15f;
-        const int PredBannerTime = 180;
-
-        const int WeatherSeconds = Dev ? 60 : 600;
-
-        float[] darkLevels = { 0f, 0.35f, 0.72f, 0.93f, 0.97f };
-
+        const int PredChaseTicks = 300;                const float PredTrackSpeed = 0.15f;            const int PredBannerTime = 180;                const int WeatherSeconds = Dev ? 60 : 600;              float[] darkLevels = { 0f, 0.35f, 0.72f, 0.93f, 0.97f };
         const float WalkSpeed = 4f;
         const int NearDistance = 5;
         const int RodPivotYOffset = 45;
         const int RodLen = 45;
         const float MaxThrow = 600f;
-
         const float SinkSpeed = 2f;
         const float FastSinkSpeed = 6f;
         const float ReelSpeed = 10f;
@@ -179,34 +143,25 @@ namespace game_câu_cá
         const float HoldReelSpeed = 3f;
         const float SinkAccel = 0.03f;
         const float MaxSinkBonus = 5f;
-
-        const int ZoneBannerTime = 180;
-
-        const int BoomTicks = 70;
-
+        const int ZoneBannerTime = 180;                         const int BoomTicks = 70;                       
         class Species
         {
             public string Name;
             public int Size;
             public Color Color;
             public float Speed;
-            public float Weight;
-            public int Behavior;
-            public int CdSec;
-
+            public float Weight;                  public int Behavior;
+            public int CdSec;         
             public Species(string name, int size, Color color, float speed, float weight, int behavior, int cdSec = 0)
             {
                 Name = name; Size = size; Color = color; Speed = speed;
                 Weight = weight; Behavior = behavior; CdSec = cdSec;
             }
         }
-
         class AbyssSlot
         {
             public Species Sp;
-            public Fish Active;
-            public int Cooldown;
-        }
+            public Fish Active;                  public int Cooldown;             }
 
         class Fish
         {
@@ -215,16 +170,9 @@ namespace game_câu_cá
             public float X, Y, Speed, BaseSpeed;
             public int Size, Value, Behavior;
             public float Weight;
-            public float Roll;
-            public float Phase;
-            public Color Color;
+            public float Roll;                   public float Phase;                  public Color Color;
             public bool Hooked;
-            public bool Bitten;
-            public bool Extra;
-            public bool Dead;
-            public Fish Target;
-            public AbyssSlot Slot;
-            public bool FacingRight { get { return Speed > 0; } }
+            public bool Bitten;                  public bool Extra;                   public bool Dead;                    public Fish Target;                  public AbyssSlot Slot;               public bool FacingRight { get { return Speed > 0; } }
             public Rectangle Bounds { get { return new Rectangle((int)X, (int)Y, Size * 2, Size); } }
         }
 
@@ -233,15 +181,13 @@ namespace game_câu_cá
             public string Name;
             public float X, Y, Speed;
             public int W, H, Zone;
-            public int Age;
-            public bool Done;
+            public int Age;                      public bool Done;
             public Rectangle Bounds { get { return new Rectangle((int)X, (int)Y, W, H); } }
         }
 
         class Hazard
         {
-            public int Kind;
-            public int Zone;
+            public int Kind;                        public int Zone;
             public float X, Y, BaseY, Speed, Phase;
             public int W, H;
             public Rectangle Bounds { get { return new Rectangle((int)X, (int)Y, W, H); } }
@@ -251,11 +197,9 @@ namespace game_câu_cá
         {
             public float X, Y;
             public int W, H, Zone;
-            public bool OnRock;
-            public bool Opened;
+            public bool OnRock;                  public bool Opened;
             public Rectangle Bounds { get { return new Rectangle((int)X, (int)Y, W, H); } }
         }
-
         class Boom
         {
             public float X, Y;
@@ -265,19 +209,13 @@ namespace game_câu_cá
         class Coral
         {
             public Rectangle Rect;
-            public Rectangle Bite;
-            public Color Color;
-            public int Seed;
-            public bool HasBiter;
+            public Rectangle Bite;               public Color Color;                  public int Seed;                     public bool HasBiter;
             public bool Touching;
             public int Flash;
         }
-
         class Cliff
         {
-            public int Side;
-            public bool NoChest;
-            public List<Rectangle> Steps = new List<Rectangle>();
+            public int Side;                                              public bool NoChest;                                          public List<Rectangle> Steps = new List<Rectangle>();
             public Point[] Poly;
             public Rectangle Bounds;
         }
@@ -285,8 +223,7 @@ namespace game_câu_cá
         class DevButton
         {
             public string Label;
-            public Func<string> Dynamic;
-            public Action Click;
+            public Func<string> Dynamic;               public Action Click;
         }
 
         enum State { Idle, Charging, Throwing, Sinking, Reeling }
@@ -298,130 +235,91 @@ namespace game_câu_cá
         Random rng = new Random();
         Timer timer = new Timer();
         int frame = 0;
-        string message = "Hold SPACE to charge, release to throw!";
-
+        string message = "Giữ space và thả  để ném";
         int bagCount = 0;
         int bagValue = 0;
         int money = Dev ? 1000000 : 0;
         int chestsOpened = 0;
-
         int rodLevel = 0;
         int lineUpgrades = 0;
         bool hasGlowBait = false;
         bool boatOwned = false;
         bool onBoat = false;
         float boatX = MooredX;
-
         List<Fish> fishes = new List<Fish>();
         List<Predator> predators = new List<Predator>();
         List<Hazard> hazards = new List<Hazard>();
         List<Chest> chests = new List<Chest>();
-        List<Rectangle> rocks = new List<Rectangle>();
-        List<Cliff> cliffs = new List<Cliff>();
-        List<Coral> corals = new List<Coral>();
+        List<Rectangle> rocks = new List<Rectangle>();           List<Cliff> cliffs = new List<Cliff>();                  List<Coral> corals = new List<Coral>();
         List<AbyssSlot> abyssSlots = new List<AbyssSlot>();
         List<AbyssSlot> readyTmp = new List<AbyssSlot>();
         List<Fish> eatenTmp = new List<Fish>();
-
         int gridW, gridH;
         List<Fish>[] grid;
         List<int> usedCells = new List<int>();
-
         int[] pending = new int[ZoneCount];
         int[] pendingExtra = new int[ZoneCount];
         int respawnTimer = 0;
         bool extrasPresent = false;
-
         int hitTicks = 0;
-
         bool atLineEnd = false;
-
         int[] predElapsed = new int[ZoneCount];
         int[] predNeeded = new int[ZoneCount];
         bool[] predBusy = new bool[ZoneCount];
         int warnTicks = 0;
         int warnZone = -1;
         int graceTicks = 0;
-        int predBannerTicks = 0;
-        string predBannerText = "";
-
+        int predBannerTicks = 0;               string predBannerText = "";
         int weatherTicks = WeatherSeconds * 60;
         float[] rainX = new float[220];
         float[] rainY = new float[220];
         Pen rainPen = new Pen(Color.FromArgb(150, 200, 220, 255), 1);
-
         float[] darkDepth;
         float darkLevel = 0f;
         float lightRadius = 0f;
-        bool devSeeAll = Dev;
-
-        float cameraX = 0f;
+        bool devSeeAll = Dev;           float cameraX = 0f;
         float cameraY = 0f;
-
         float playerX = 250;
         float rodAngle = 25f;
         int facing = 1;
-
         float power = 0f;
         float powerDir = 1f;
         float lastPower = 0f;
         float throwT = 0f;
         float throwStartX, throwStartY, throwTargetX, throwArc;
-
         float hookX, hookY;
         bool leftPressed, rightPressed, downPressed, upPressed;
         float tapReel = 0f;
         float sinkBonus = 0f;
-
         int zoneBannerTicks = 0;
         int zoneBannerZone = -1;
-        bool[] zoneSeen = new bool[ZoneCount];
-
-        bool shopOpen = false;
-        int shopTab = 0;
-        int shopSel = 0;
+        bool[] zoneSeen = new bool[ZoneCount];                  bool shopOpen = false;
+        int shopTab = 0;                  int shopSel = 0;
         Point mousePos = new Point(-1, -1);
-
         List<DevButton> devButtons = new List<DevButton>();
         bool devOpen = true;
-
-        int popup = 0;
-        bool seenJelly = false;
+        int popup = 0;                         bool seenJelly = false;
         bool seenMine = false;
         List<Boom> booms = new List<Boom>();
-
         bool pauseOpen = false;
-        int pauseView = 0;
-        string pauseMsg = "";
+        int pauseView = 0;                     string pauseMsg = "";
         bool confirmSave = false;
-
-        int playTicks = 0;
-        int totalCaught = 0;
-        int totalEarned = 0;
-        int fishLost = 0;
-
-        bool musicLoaded = false;
+        int playTicks = 0;                     int totalCaught = 0;                   int totalEarned = 0;                   int fishLost = 0;                      bool musicLoaded = false;
         bool musicStarted = false;
         bool musicOn = true;
-        int musicVol = 50;
-
-        Image sellImage = null;
+        int musicVol = 50;                     Image sellImage = null;
         Image gearImage = null;
         Image dockImage = null;
-        Image coralImage = null;
-
-        Color[] moundColors = { Color.FromArgb(34, 62, 52), Color.FromArgb(46, 72, 60), Color.FromArgb(58, 62, 80) };
+        Image coralImage = null;           Color[] moundColors = { Color.FromArgb(34, 62, 52), Color.FromArgb(46, 72, 60), Color.FromArgb(58, 62, 80) };
         Color[] branchColors = { Color.FromArgb(176, 156, 108), Color.FromArgb(150, 158, 96), Color.FromArgb(190, 170, 130) };
         Color[] weedColors = { Color.FromArgb(70, 140, 84), Color.FromArgb(92, 158, 96) };
-
         Dictionary<Color, SolidBrush> brushCache = new Dictionary<Color, SolidBrush>();
         Pen rockPen = new Pen(Color.FromArgb(45, 55, 75), 2);
         Pen dividerPen = new Pen(Color.FromArgb(120, 255, 255, 255), 1);
         Pen glowPen = new Pen(Color.White, 2);
         Pen rodPen = new Pen(Color.Black, 3);
         Pen goldPen = new Pen(Color.Gold, 3);
-        Pen predOutlinePen = new Pen(Color.Red, 3);
-        Pen jellyTentPen = new Pen(Color.FromArgb(170, 210, 150, 255), 2);
+        Pen predOutlinePen = new Pen(Color.Red, 3);             Pen jellyTentPen = new Pen(Color.FromArgb(170, 210, 150, 255), 2);
         Pen artOutline = new Pen(Color.FromArgb(40, 28, 24), 1);
         Pen mineSpikePen = new Pen(Color.FromArgb(74, 74, 82), 7);
         Pen mineBodyPen = new Pen(Color.FromArgb(40, 28, 24), 3);
@@ -459,7 +357,6 @@ namespace game_câu_cá
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.KeyPreview = true;
-
             zoneTop[0] = WaterTop;
             for (int z = 0; z < ZoneCount; z++)
                 zoneTop[z + 1] = zoneTop[z] + zoneScreens[z] * ScreenH;
@@ -481,8 +378,7 @@ namespace game_câu_cá
                 rainY[i] = (float)rng.NextDouble();
             }
 
-            SpawnRocks();
-
+            SpawnRocks();          
             gridW = WorldW / CellSize + 2;
             gridH = WorldBottom / CellSize + 2;
             grid = new List<Fish>[gridW * gridH];
@@ -510,6 +406,7 @@ namespace game_câu_cá
             InitMusic();
             LoadSprites();
             Safe("LoadPackExtras", LoadPackExtras);
+            Safe("LoadMenu", LoadMenu);
 
             timer.Interval = 16;
             timer.Tick += GameLoop;
@@ -533,7 +430,6 @@ namespace game_câu_cá
                 if (y < ZoneBottomY(z)) return z;
             return ZoneCount - 1;
         }
-
         int CurrentZone()
         {
             for (int z = ZoneCount - 1; z >= 0; z--)
@@ -555,8 +451,7 @@ namespace game_câu_cá
 
         PointF RodTip()
         {
-            if (packReady) return PackRodTip();
-
+            if (packReady) return PackRodTip();      
             double a = rodAngle * Math.PI / 180.0;
             float x = playerX + facing * (float)(Math.Sin(a) * RodLen);
             float y = (WaterTop - RodPivotYOffset) - (float)(Math.Cos(a) * RodLen);
@@ -572,13 +467,12 @@ namespace game_câu_cá
 
         string WeatherName()
         {
-            if (weather == Weather.Rain) return "Rain";
-            if (weather == Weather.Storm) return "Storm";
-            return "Clear";
+            if (weather == Weather.Rain) return "Mưa";
+            if (weather == Weather.Storm) return "Bão";
+            return "Không có mây";
         }
 
         int UpgradeCost { get { return 100 + 60 * lineUpgrades + 4 * lineUpgrades * lineUpgrades; } }
-
         float LinePerUpgrade
         {
             get { return (WorldBottom - WaterTop - HookSize - 2 - BaseLine) / MaxUpgrades; }
@@ -586,7 +480,6 @@ namespace game_câu_cá
 
         float LineLength { get { return BaseLine + Math.Min(lineUpgrades, MaxUpgrades) * LinePerUpgrade; } }
         float MaxLineLength { get { return BaseLine + MaxUpgrades * LinePerUpgrade; } }
-
         int depthLevel
         {
             get
@@ -598,7 +491,6 @@ namespace game_câu_cá
                 return lvl;
             }
         }
-
         float RodCapacity { get { return rodCapacity[rodLevel] * (onBoat ? BoatCapMul : 1f); } }
         int MaxHooked { get { return 3 + rodLevel + (onBoat ? BoatExtraSlots : 0); } }
 
@@ -625,7 +517,6 @@ namespace game_câu_cá
                 if (f.Hooked) list.Add(f);
             return list;
         }
-
         int NextUpgradeCost()
         {
             int best = -1;
@@ -640,11 +531,11 @@ namespace game_câu_cá
 
         void BuyGlow()
         {
-            if (hasGlowBait) { message = "You already own the Glow Bait."; return; }
-            if (money < GlowPrice) { message = "Need $" + GlowPrice + " for the Glow Bait."; return; }
+            if (hasGlowBait) { message = "Bạn đã sở hữu mồi phát sáng."; return; }
+            if (money < GlowPrice) { message = "Cần $" + GlowPrice + " để mua Mồi Phát Sáng."; return; }
             money -= GlowPrice;
             hasGlowBait = true;
-            message = "Bought the Glow Bait! A big circle of light now follows your hook.";
+            message = "Đã mua Mồi Phát Sáng! vùng nhìn được sẽ tăng mạnh.";
         }
 
         void BuyRod() { BuyRodAt(rodLevel + 1); }
@@ -653,30 +544,30 @@ namespace game_câu_cá
         {
             if (index < 0 || index >= rodNames.Length) return;
 
-            if (index <= rodLevel) { message = "You already own the " + rodNames[index] + "."; return; }
-            if (index > rodLevel + 1) { message = "Buy the " + rodNames[rodLevel + 1] + " first."; return; }
+            if (index <= rodLevel) { message = "Bạn đã sở hữu " + rodNames[index] + "."; return; }
+            if (index > rodLevel + 1) { message = "Hãy mua " + rodNames[rodLevel + 1] + " trước."; return; }
 
             int cost = rodPrice[index];
-            if (money < cost) { message = "Need $" + cost + " for the " + rodNames[index] + "."; return; }
+            if (money < cost) { message = "Cần $" + cost + " để mua " + rodNames[index] + "."; return; }
 
             money -= cost;
             rodLevel = index;
             shopSel = Math.Min(rodLevel + 1, rodNames.Length - 1);
-            message = "Bought the " + rodNames[rodLevel] + "! It holds " + RodCapacity + " kg.";
+            message = "Mua " + rodNames[rodLevel] + "nó có thể giữ được tổng " + RodCapacity + " kg.";
         }
 
         void Upgrade()
         {
             if (lineUpgrades >= MaxUpgrades)
             {
-                message = "Your line is already fully upgraded!";
+                message = "Dây câu của bạn đã được nâng cấp tối đa!";
                 return;
             }
 
             int cost = UpgradeCost;
             if (money < cost)
             {
-                message = "Need $" + cost + " to upgrade your line.";
+                message = "Cần $" + cost + " để nâng cấp dây câu.";
                 return;
             }
 
@@ -685,11 +576,10 @@ namespace game_câu_cá
             lineUpgrades++;
 
             if (depthLevel > levelBefore)
-                message = "Line upgraded! You can now reach the " + zoneNames[depthLevel - 1] + " zone!";
+                message = "Dây câu được nâng cấp! Bạn có thể tiếp cận vùng " + zoneNames[depthLevel - 1] + "!";
             else
-                message = "Line extended to " + (int)(LineLength / 10) + " m! (" + lineUpgrades + "/" + MaxUpgrades + ")";
+                message = "Dây câu được mở rộng đến " + (int)(LineLength / 10) + " m! (" + lineUpgrades + "/" + MaxUpgrades + ")";
         }
-
         bool CanHook(Fish f, float weight)
         {
             int rodMin = rodMinZone[rodLevel];
@@ -698,7 +588,7 @@ namespace game_câu_cá
 
             if (f.Zone < minZone) return false;
             if (minZone < rodMin) return true;
-            return weight >= RodCapacity * MinWeightFrac;
+            return rodLevel == 0 || weight >= RodCapacity * MinWeightFrac;
         }
 
         bool BoatDocked { get { return boatX <= MooredX + 1f; } }
@@ -712,7 +602,6 @@ namespace game_câu_cá
         {
             return name == "Pike" || name == "Salmon" || name == "Catfish";
         }
-
         float RegionMul(Fish f)
         {
             float x = hookX;
@@ -732,10 +621,10 @@ namespace game_câu_cá
         {
             if (onBoat)
             {
-                if (!BoatDocked) { message = "Lái tàu về cảng để xuống tàu."; return; }
+                if (!BoatDocked) { message = "Lái tàu trờ lại cảng để xuống tàu."; return; }
                 onBoat = false;
                 playerX = DockW - 30;
-                message = "Bạn đã xuống tàu.";
+                message = "Xuống thuyền thành công";
                 return;
             }
 
@@ -743,7 +632,7 @@ namespace game_câu_cá
             {
                 onBoat = true;
                 playerX = boatX + BoatW / 2f;
-                message = "A/D để lái   Giữ SPACE để ném cần   Khi ở trên tàu bạn có thể câu nhiều cá hơn   E ở cảng để xuống tàu.";
+                message = "A/D = lái   giữ SPACE = ném cần   E ở cảng = xuống tàu";
                 return;
             }
 
@@ -751,7 +640,7 @@ namespace game_câu_cá
             {
                 money -= BoatPrice;
                 boatOwned = true;
-                message = "Bạn đã mua tàu thành công ấn E để lên tàu.";
+                message = "Mua thành công , ấn E để lên tàu .";
             }
             else
                 message = "Con tàu này cần $" + BoatPrice + ".";
@@ -768,7 +657,6 @@ namespace game_câu_cá
         {
             return RectHitsRock(new Rectangle((int)x, (int)y, HookSize, HookSize));
         }
-
         int RollCliffSteps()
         {
             int r = rng.Next(100);
@@ -776,7 +664,6 @@ namespace game_câu_cá
             if (r < 80) return rng.Next(3, 5);
             return rng.Next(5, 9);
         }
-
         int RollCliffWidth()
         {
             int r = rng.Next(100);
@@ -791,8 +678,7 @@ namespace game_câu_cá
             cliffs.Clear();
             corals.Clear();
 
-            int limit = WorldBottom - 130;
-            bool skippedDockCliff = false;
+            int limit = WorldBottom - 130;               bool skippedDockCliff = false;
 
             for (int side = 0; side < 2; side++)
             {
@@ -804,14 +690,12 @@ namespace game_câu_cá
                     int stepH = rng.Next(90, 151);
                     steps = Math.Min(steps, (limit - y) / stepH);
                     if (steps < 1) break;
-
                     if (side == 0 && !skippedDockCliff)
                     {
                         skippedDockCliff = true;
                         y += steps * stepH + rng.Next(300, 600);
                         continue;
                     }
-
                     if (rng.NextDouble() < CliffSkipChance)
                     {
                         y += steps * stepH + rng.Next(300, 600);
@@ -867,7 +751,6 @@ namespace game_câu_cá
             for (int i = 1; i < c.Steps.Count; i++) b = Rectangle.Union(b, c.Steps[i]);
             c.Bounds = b;
         }
-
         void AddCoralOn(Rectangle r)
         {
             int zone = ZoneAtY(r.Y);
@@ -884,7 +767,6 @@ namespace game_câu_cá
             c.HasBiter = rng.Next(2) == 0;
             corals.Add(c);
         }
-
         void AddRockChest(Cliff c)
         {
             Rectangle top = c.Steps[0];
@@ -907,8 +789,7 @@ namespace game_câu_cá
 
                 bool inside = hookActive && c.HasBiter && c.Bite.IntersectsWith(hookRect);
                 if (!inside) { c.Touching = false; continue; }
-                if (c.Touching) continue;
-                c.Touching = true;
+                if (c.Touching) continue;                       c.Touching = true;
 
                 List<Fish> hooked = HookedList();
                 if (hooked.Count == 0) continue;
@@ -919,7 +800,7 @@ namespace game_câu_cá
                 bitten.Value = (int)(bitten.Value * CoralBiteValueLeft);
                 bitten.Bitten = true;
                 c.Flash = 45;
-                message = "A coral fish bit your " + bitten.Name + "! (-$" + (before - bitten.Value) + ")";
+                message = "cá san hô đã cắn mất một phần cá của bạn " + bitten.Name + "! (-$" + (before - bitten.Value) + ")";
             }
         }
 
@@ -934,7 +815,6 @@ namespace game_câu_cá
             c.OnRock = false;
             chests.Add(c);
         }
-
         int RollChestReward(Chest c)
         {
             if (!c.OnRock)
@@ -946,18 +826,15 @@ namespace game_câu_cá
 
             int cap = rockChestCap[c.Zone];
             int next = NextUpgradeCost();
-            if (next < 0) return cap;
-            return Math.Min(cap, (int)(next * RockChestPercent));
+            if (next < 0) return cap;                                    return Math.Min(cap, (int)(next * RockChestPercent));
         }
-
         void RerollChests()
         {
             chests.Clear();
 
             foreach (Cliff c in cliffs)
             {
-                if (c.NoChest) continue;
-                if (rng.NextDouble() < RockChestChance) AddRockChest(c);
+                if (c.NoChest) continue;                   if (rng.NextDouble() < RockChestChance) AddRockChest(c);
             }
 
             if (rng.NextDouble() < SeabedChestChance) SpawnSeabedChest();
@@ -974,9 +851,9 @@ namespace game_câu_cá
                 int reward = RollChestReward(c);
                 c.Opened = true;
                 money += reward;
-                totalEarned += reward;
+                totalEarned += reward;         
                 chestsOpened++;
-                message = "TREASURE! You opened a chest and found $" + reward + "!";
+                message = "Mở rương thành công bạn nhận được " + reward + "!";
             }
         }
 
@@ -997,13 +874,11 @@ namespace game_câu_cá
             f.Extra = extra;
             f.Phase = (float)(rng.NextDouble() * 6.28);
             f.Roll = (float)rng.NextDouble();
-
             f.Weight = sp.Weight * (0.7f + (float)rng.NextDouble() * 0.6f);
             int price;
             f.Value = fishPrice.TryGetValue(sp.Name, out price) ? price : 1;
             return f;
         }
-
         bool SpotFree(int zone, float x, float y, float gap)
         {
             for (int i = 0; i < fishes.Count; i++)
@@ -1014,7 +889,6 @@ namespace game_câu_cá
             }
             return true;
         }
-
         void SpawnBatch(int zone, int n, bool anywhere, bool extra)
         {
             int made = 0;
@@ -1035,7 +909,6 @@ namespace game_câu_cá
 
             int minY = ZoneTopY(zone) + 12;
             int maxY = Math.Max(minY + 1, ZoneBottomY(zone) - sp.Size - 6);
-
             float baseX = 0f, baseY = 0f;
             for (int attempt = 0; attempt < 8; attempt++)
             {
@@ -1047,7 +920,6 @@ namespace game_câu_cá
             for (int i = 0; i < count; i++)
             {
                 Fish f = MakeFish(zone, sp, extra);
-
                 float mySpeed = count > 1 ? speed * (0.95f + (float)rng.NextDouble() * 0.1f) : speed;
                 f.BaseSpeed = mySpeed;
                 f.Speed = goRight ? mySpeed : -mySpeed;
@@ -1068,7 +940,6 @@ namespace game_câu_cá
             }
             return count;
         }
-
         void OnFishRemoved(Fish f)
         {
             if (f.Slot != null)
@@ -1079,7 +950,6 @@ namespace game_câu_cá
             else if (!f.Extra)
                 pending[f.Zone]++;
         }
-
         void BuildAbyssSlots()
         {
             abyssSlots.Clear();
@@ -1220,10 +1090,9 @@ namespace game_câu_cá
             if (w == Weather.Clear)
             {
                 for (int z = 0; z < ZoneCount; z++) pendingExtra[z] = 0;
-                message = "The weather clears up.";
+                message = "Thời tiết trong xanh.";
                 return;
             }
-
             float boost = w == Weather.Rain ? 0.25f : 0.5f;
             for (int z = 0; z < ZoneCount; z++)
             {
@@ -1232,10 +1101,9 @@ namespace game_câu_cá
             }
 
             message = w == Weather.Rain
-                ? "It starts to rain - more fish are showing up!"
-                : "A storm is rolling in! Visibility is low, but there are lots of fish.";
+                ? "Trời bắt đầu mưa , cá lại nhiều hơn rồi"
+                : "Một cơn bão đã xuất hiện , tầm nhìn giảm nhưng cá xuất hiện nhiều hơn";
         }
-
         void NextWeather()
         {
             int roll = rng.Next(100);
@@ -1246,7 +1114,7 @@ namespace game_câu_cá
             if (next == weather)
             {
                 weatherTicks = WeatherSeconds * 60;
-                message = "The weather stays the same.";
+                message = "Thời tiết không thây đổi.";
                 return;
             }
             SetWeather(next);
@@ -1283,8 +1151,7 @@ namespace game_câu_cá
             h.W = kind == 0 ? JellyW : MineW;
             h.H = kind == 0 ? JellyH : MineH;
 
-            int minY = Math.Max(ZoneTopY(zone) + 70, WaterTop + 150);
-            int maxY = Math.Max(minY + 1, ZoneBottomY(zone) - h.H - 70);
+            int minY = Math.Max(ZoneTopY(zone) + 70, WaterTop + 150);               int maxY = Math.Max(minY + 1, ZoneBottomY(zone) - h.H - 70);
 
             bool placed = false;
             for (int attempt = 0; attempt < 40; attempt++)
@@ -1345,7 +1212,6 @@ namespace game_câu_cá
                 }
                 else
                     h.Y = h.BaseY + (float)Math.Sin(h.Phase) * 6f;
-
                 if (hookActive && popup == 0 && !(h.Kind == 0 ? seenJelly : seenMine)
                     && h.Bounds.IntersectsWith(Rectangle.Inflate(hook, 160, 160)))
                 {
@@ -1366,22 +1232,20 @@ namespace game_câu_cá
                 {
                     int lost = LoseHooked(1);
                     hookY = Math.Max(WaterTop + 5, hookY - 80);
-                    message = lost > 0 ? "Jellyfish shock! You lost a fish." : "Jellyfish shock!";
+                    message = lost > 0 ? "Sứa giật điện!! bạn mất một con cá " : "Jellyfish shock!";
                     PlayBeep(880, 150);
                 }
                 else
                 {
                     int lost = LoseHooked((int)Math.Ceiling(HookedCount() * 0.5));
                     hookY = Math.Max(WaterTop + 5, hookY - 150);
-                    message = lost > 0 ? "BOOM! The mine blew away " + lost + " fish!" : "BOOM! Sea mine!";
+                    message = lost > 0 ? "BOOM! sea mine đã nổ mất  " + lost + " fish!" : "BOOM! Sea mine!";
                     booms.Add(new Boom { X = h.X + h.W / 2f, Y = h.Y + h.H / 2f, Life = BoomTicks });
                     PlayBeep(200, 450);
                     hazards.RemoveAt(i);
-                    AddHazard(1, h.Zone, true);
-                }
+                    AddHazard(1, h.Zone, true);                   }
 
-                if (HookHitsRock(hookX, hookY)) hookY = before;
-            }
+                if (HookHitsRock(hookX, hookY)) hookY = before;               }
         }
 
         int RollPredTime(int z)
@@ -1389,7 +1253,6 @@ namespace game_câu_cá
             int sec = rng.Next(predMinutes[z, 0] * 60, predMinutes[z, 1] * 60 + 1) / PredDiv;
             return Math.Max(3, sec) * 60;
         }
-
         bool PredImmune(int z)
         {
             if (z == 0) return lineUpgrades >= 10;
@@ -1412,8 +1275,7 @@ namespace game_câu_cá
         {
             predators.Clear();
             warnTicks = 0;
-            predBannerTicks = 0;
-            for (int z = 0; z < ZoneCount; z++)
+            predBannerTicks = 0;               for (int z = 0; z < ZoneCount; z++)
                 if (predBusy[z]) ClearPredator(z);
         }
 
@@ -1425,7 +1287,6 @@ namespace game_câu_cá
             p.W = predW[zone];
             p.H = predH[zone];
             p.Age = 0;
-
             bool fromLeft = rng.Next(2) == 0;
             p.Speed = fromLeft ? predSpeed[zone] : -predSpeed[zone];
             float edge = ClientSize.Width / 2f + p.W;
@@ -1433,7 +1294,7 @@ namespace game_câu_cá
             p.Y = hookY - p.H / 2f;
 
             predators.Add(p);
-            message = p.Name + " is coming!";
+            message = p.Name + " sắp xuất hiện!";
         }
 
         void PredatorSteal(Predator p, int take)
@@ -1451,7 +1312,7 @@ namespace game_câu_cá
             }
 
             fishLost += take;
-            message = p.Name + " stole " + take + " fish!";
+            message = p.Name + " lấy mất " + take + " cá!";
         }
 
         void PredatorAttack(Predator p)
@@ -1461,12 +1322,12 @@ namespace game_câu_cá
             if (p.Zone == 0)
             {
                 if (rng.NextDouble() < PiranhaStealChance()) PredatorSteal(p, 1);
-                else message = "The Piranha tried to bite your catch but missed!";
+                else message = "Piranha thử cắn cá của bạn nhưng đã hụt!";
             }
             else if (p.Zone == 1)
             {
                 if (rng.NextDouble() < EelCutChance()) SnapLine("The Eel");
-                else message = "The Eel tried to cut your line but it held!";
+                else message = "Eel thử cắn dây câu của bạn nhưng đã hụt!";
             }
             else if (p.Zone == 2)
             {
@@ -1483,7 +1344,6 @@ namespace game_câu_cá
         {
             bool protectedNow = graceTicks > 0;
             int hookZone = hookActive ? CurrentZone() : -1;
-
             if (hookZone >= 0 && !protectedNow && !PredImmune(hookZone) && !predBusy[hookZone])
             {
                 predElapsed[hookZone]++;
@@ -1492,9 +1352,8 @@ namespace game_câu_cá
                     predBusy[hookZone] = true;
                     warnTicks = WarnTime;
                     warnZone = hookZone;
-                    message = "WARNING: something is coming! Reel up or leave this zone!";
-                    predBannerText = predNames[hookZone].ToUpper() + " IS COMING!";
-                    predBannerTicks = PredBannerTime;
+                    message = "Cảnh báo: một thứ gì đấy sắp xuất hiện hãy kéo cần lên hoặc cố gắn né!";
+                    predBannerText = predNames[hookZone].ToUpper() + " Sắp xuất hiện!!";                       predBannerTicks = PredBannerTime;
                 }
             }
 
@@ -1503,9 +1362,8 @@ namespace game_câu_cá
                 if (!hookActive || hookZone != warnZone || protectedNow)
                 {
                     warnTicks = 0;
-                    predBannerTicks = 0;
-                    ClearPredator(warnZone);
-                    if (hookActive) message = "You got away!";
+                    predBannerTicks = 0;                       ClearPredator(warnZone);
+                    if (hookActive) message = "Bạn đã tránh được lần này";
                 }
                 else
                 {
@@ -1528,7 +1386,6 @@ namespace game_câu_cá
 
                 p.X += p.Speed;
                 p.Age++;
-
                 if (!p.Done && p.Age < PredChaseTicks)
                 {
                     float targetY = hookY - p.H / 2f;
@@ -1537,15 +1394,12 @@ namespace game_câu_cá
                     targetY = Math.Max(minY, Math.Min(targetY, maxY));
                     p.Y += (targetY - p.Y) * PredTrackSpeed;
                 }
-
                 if (!protectedNow && !p.Done && HookedCount() > 0
                     && Rectangle.Inflate(p.Bounds, 0, 15).IntersectsWith(hookRect))
                 {
                     PredatorAttack(p);
-                    if (state == State.Idle) return;
-                    p.Done = true;
+                    if (state == State.Idle) return;                       p.Done = true;
                 }
-
                 if (Math.Abs(p.X - hookX) > ClientSize.Width + p.W * 3)
                 {
                     ClearPredator(p.Zone);
@@ -1561,7 +1415,6 @@ namespace game_câu_cá
             if (f.Target == null)
             {
                 f.Speed = Math.Sign(f.Speed) * f.BaseSpeed;
-
                 if ((index + frame) % 10 != 0) return;
 
                 float best = HuntRange * HuntRange;
@@ -1580,7 +1433,6 @@ namespace game_câu_cá
             Fish t = f.Target;
             float tx = t.X - f.X, ty = t.Y - f.Y;
             if (tx * tx + ty * ty > HuntRange * HuntRange * 2.25f) { f.Target = null; return; }
-
             f.Speed = (t.X > f.X ? 1f : -1f) * f.BaseSpeed * 1.7f;
             f.Y += Math.Sign(t.Y - f.Y) * Math.Min(Math.Abs(t.Y - f.Y), 2.5f);
             f.Y = Math.Max(ZoneTopY(f.Zone) + 6, Math.Min(f.Y, ZoneBottomY(f.Zone) - f.Size - 6));
@@ -1592,7 +1444,6 @@ namespace game_câu_cá
                 f.Target = null;
             }
         }
-
         void SeparateFish(Rectangle area)
         {
             for (int i = 0; i < usedCells.Count; i++) grid[usedCells[i]].Clear();
@@ -1625,8 +1476,7 @@ namespace game_câu_cá
                 for (int i = 0; i < cell.Count; i++)
                 {
                     Fish a = cell[i];
-                    if (a.Target != null) continue;
-                    Rectangle ra = a.Bounds;
+                    if (a.Target != null) continue;                         Rectangle ra = a.Bounds;
 
                     for (int dy = -1; dy <= 1; dy++)
                     {
@@ -1668,7 +1518,7 @@ namespace game_câu_cá
             state = State.Charging;
             power = 0f;
             powerDir = 1f;
-            message = "A/D = chỉnh hướng câu    Giữ và thả SPACE để ném cần";
+            message = "A/D = quay hướng nhân vật   giữ SPACE để ném!";
         }
 
         void ThrowRod()
@@ -1706,19 +1556,18 @@ namespace game_câu_cá
                 OnFishRemoved(f);
             }
 
-            bagCount += caught;
+            if (gameMode == GameMode.Mini) value *= MiniPriceMul;               bagCount += caught;
             totalCaught += caught;
             bagValue += value;
 
             if (caught == 0)
-                message = "Không câu được con cá nào. Giữ và thả SPACE để ném cần";
+                message = "Lần này không có cá rồi hãy thử lại!";
             else
             {
                 var parts = new List<string>();
                 foreach (var kv in counts) parts.Add(kv.Key + " x" + kv.Value);
                 message = "Caught: " + string.Join(", ", parts.ToArray()) + "!";
             }
-
             if (questFish && !boatOwned)
             {
                 boatOwned = true;
@@ -1747,9 +1596,8 @@ namespace game_câu_cá
             atLineEnd = false;
             state = State.Idle;
             graceTicks = GraceTime;
-            message = who + " snapped your line! You lost your catch. (Protected for 5s)";
+            message = who + " đã cắn mất dây của bạn ";
         }
-
         void MoveHookUp(float dist)
         {
             float ny = hookY - dist;
@@ -1764,10 +1612,10 @@ namespace game_câu_cá
 
         void Sell()
         {
-            if (bagCount == 0) { message = "You have no fish to sell."; return; }
+            if (bagCount == 0) { message = "Bạn không còn cá để bán."; return; }
             money += bagValue;
             totalEarned += bagValue;
-            message = "Sold " + bagCount + " fish for $" + bagValue + "!";
+            message = "Bán " + bagCount + " cá với giá $" + bagValue + "!";
             bagCount = 0;
             bagValue = 0;
         }
@@ -1786,7 +1634,6 @@ namespace game_câu_cá
             shopSel = Math.Min(rodLevel + 1, rodNames.Length - 1);
             message = "";
         }
-
         int NearestShop()
         {
             Rectangle[] boxes = { SellBox, GearBox };
@@ -1805,7 +1652,6 @@ namespace game_câu_cá
             }
             return best;
         }
-
         int NearestSpot()
         {
             if (onBoat) return BoatDocked ? 2 : -1;
@@ -1815,7 +1661,7 @@ namespace game_câu_cá
         }
 
         void Interact()
-        {
+        { 
             if (state != State.Idle) return;
             if (onBoat) { UseBoat(); return; }
 
@@ -1891,7 +1737,6 @@ namespace game_câu_cá
         }
         Rectangle DevHeader { get { return new Rectangle(DevPanel.X, DevPanel.Y, DevPanel.Width, 28); } }
         Rectangle DevBtn(int i) { return new Rectangle(DevPanel.X + 8, DevPanel.Y + 34 + i * 30, DevPanel.Width - 16, 26); }
-
         bool HandleDevClick(Point p)
         {
             if (!DevPanel.Contains(p)) return false;
@@ -1923,20 +1768,25 @@ namespace game_câu_cá
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (menuOpen) { HandleMenuKey(e); return; }
+            if (gameMode == GameMode.Menu || gameMode == GameMode.MiniResult)
+            {
+                HandleModeKey(e);
+                e.SuppressKeyPress = true;
+                return;
+            }
             if (popup != 0)
             {
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Escape) ClosePopup();
                 e.SuppressKeyPress = true;
                 return;
             }
-
             if (helpOpen)
             {
                 if (e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter || e.KeyCode == Keys.H) helpOpen = false;
                 e.SuppressKeyPress = true;
                 return;
             }
-
             if (pauseOpen)
             {
                 if (e.KeyCode == Keys.Escape)
@@ -1947,7 +1797,6 @@ namespace game_câu_cá
                 e.SuppressKeyPress = true;
                 return;
             }
-
             if (e.KeyCode == Keys.Escape && !shopOpen)
             {
                 OpenPause();
@@ -1990,7 +1839,7 @@ namespace game_câu_cá
                 else if (state == State.Sinking)
                 {
                     state = State.Reeling;
-                    message = "Reeling up!";
+                    message = "Kéo lên!";
                 }
                 e.SuppressKeyPress = true;
             }
@@ -2011,6 +1860,7 @@ namespace game_câu_cá
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
+            if (menuOpen) return;
             if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left) leftPressed = false;
             if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right) rightPressed = false;
             if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down) downPressed = false;
@@ -2035,6 +1885,9 @@ namespace game_câu_cá
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            if (menuOpen) { HandleMenuClick(e.Location); return; }
+            if (gameMode == GameMode.Menu || gameMode == GameMode.MiniResult) { HandleModeClick(e.Location); return; }
+
             if (popup != 0) { if (PopupBtn.Contains(e.Location)) ClosePopup(); return; }
             if (pauseOpen) { HandlePauseClick(e.Location); return; }
             if (helpOpen)
@@ -2042,12 +1895,10 @@ namespace game_câu_cá
                 if (HelpClose.Contains(e.Location) || !HelpPanel.Contains(e.Location)) helpOpen = false;
                 return;
             }
-
             if (HelpIconRect.Contains(e.Location)) { OpenHelp(); return; }
             if (CogIconRect.Contains(e.Location)) { OpenPause(); return; }
 
             if (Dev && HandleDevClick(e.Location)) return;
-
             if (!shopOpen)
             {
                 if (state != State.Idle) return;
@@ -2061,7 +1912,6 @@ namespace game_câu_cá
                 else if (near == 2 && BoatRect.Contains(w)) UseBoat();
                 return;
             }
-
             if (GearClose.Contains(e.Location)) { shopOpen = false; return; }
 
             for (int i = 0; i < 3; i++)
@@ -2080,11 +1930,12 @@ namespace game_câu_cá
 
         private void GameLoopCore()
         {
-            if (popup != 0 || pauseOpen || helpOpen) { Invalidate(); return; }
+            if (menuOpen) { MenuTick(); Invalidate(); return; }
+            if (popup != 0 || pauseOpen || helpOpen || gameMode == GameMode.Menu || gameMode == GameMode.MiniResult) { Invalidate(); return; }
 
             frame++;
             playTicks++;
-
+            UpdateMiniTimer();
             if (message != lastMessage)
             {
                 lastMessage = message;
@@ -2123,7 +1974,6 @@ namespace game_câu_cá
 
             Invalidate();
         }
-
         void UpdateWalking()
         {
             if (state == State.Idle)
@@ -2151,7 +2001,6 @@ namespace game_câu_cá
                 if (rightPressed) facing = 1;
             }
         }
-
         void UpdatePower()
         {
             if (state != State.Charging) return;
@@ -2186,7 +2035,6 @@ namespace game_câu_cá
                     break;
             }
             rodAngle += (targetAngle - rodAngle) * ease;
-
             if (state == State.Idle || state == State.Charging)
                 PlaceHookAtTip();
         }
@@ -2212,7 +2060,7 @@ namespace game_câu_cá
                 RerollChests();
                 Array.Clear(zoneSeen, 0, ZoneCount);
                 zoneBannerTicks = 0;
-                message = "A/D để duy chuyển mồi  S để chìm nhanh hơn    W để giật cá lên một tí   SPACE để kéo cần lên";
+                message = "A/D = quay nhân vật   S = chìm nhân hơn   W = để giật cần một chút   SPACE = kéo cần lên";
             }
         }
 
@@ -2225,8 +2073,7 @@ namespace game_câu_cá
             if (leftPressed) hookX -= 4;
             if (rightPressed) hookX += 4;
             hookX = Math.Max(LeftLimit, Math.Min(hookX, RightLimit - HookSize));
-            if (HookHitsRock(hookX, hookY)) hookX = oldX;
-
+            if (HookHitsRock(hookX, hookY)) hookX = oldX;   
             if (state != State.Sinking) tapReel = 0f;
 
             if (state == State.Sinking)
@@ -2252,8 +2099,7 @@ namespace game_câu_cá
             }
             else if (upPressed)
             {
-                sinkBonus = 0f;
-                MoveHookUp(HoldReelSpeed);
+                sinkBonus = 0f;                                 MoveHookUp(HoldReelSpeed);
                 movedUp = true;
             }
             else
@@ -2265,24 +2111,21 @@ namespace game_câu_cá
 
             if (hookY <= WaterTop)
             {
-                FinishCast();
-                return;
+                FinishCast();                   return;
             }
-
             if (!movedUp && hookY > oldY && HookHitsRock(hookX, hookY))
             {
                 hookY = oldY;
                 sinkBonus = 0f;
-                if (warnTicks == 0) message = "A rock is in the way! Steer around it (A/D) or reel up.";
+                if (warnTicks == 0) message = "Dây câu của bạn dính vào đá rồi hãy duy chuyển sang một bên hoặc kéo cần lên.";
             }
-
             if (hookY >= depthLimitY)
             {
                 hookY = depthLimitY;
                 if (!atLineEnd)
                 {
                     atLineEnd = true;
-                    message = "Đã tới giới hạn dây câu. ấn SPACE hoặc giữ W để kéo lên";
+                    message = "Đã hết dây câu , hay kéo cần lên.";
                 }
             }
             else atLineEnd = false;
@@ -2290,25 +2133,21 @@ namespace game_câu_cá
 
         void UpdateCamera()
         {
-            float targetCam = IdleCamY();
-            if (state == State.Sinking || state == State.Reeling)
+            float targetCam = IdleCamY();               if (state == State.Sinking || state == State.Reeling)
                 targetCam = hookY - ClientSize.Height * 0.4f;
 
             float maxCam = Math.Max(0, WorldBottom - ClientSize.Height);
             targetCam = Math.Max(0f, Math.Min(targetCam, maxCam));
             cameraY += (targetCam - cameraY) * 0.15f;
-
             float targetCamX;
             if (state == State.Charging)
-                targetCamX = (playerX + GetTargetX()) / 2f - ClientSize.Width / 2f;
-            else if (state == State.Throwing || state == State.Sinking || state == State.Reeling)
+                targetCamX = (playerX + GetTargetX()) / 2f - ClientSize.Width / 2f;               else if (state == State.Throwing || state == State.Sinking || state == State.Reeling)
                 targetCamX = hookX + HookSize / 2f - ClientSize.Width / 2f;
             else
                 targetCamX = playerX - ClientSize.Width / 2f;
 
             cameraX += (ClampCamX(targetCamX) - cameraX) * 0.15f;
         }
-
         void UpdateZoneBanner(bool hookActive)
         {
             if (zoneBannerTicks > 0) zoneBannerTicks--;
@@ -2322,7 +2161,6 @@ namespace game_câu_cá
                 zoneBannerTicks = ZoneBannerTime;
             }
         }
-
         void UpdateFish(bool hookActive, Rectangle hookRect)
         {
             Rectangle activeArea = new Rectangle((int)cameraX - 500, (int)cameraY - 500,
@@ -2344,22 +2182,19 @@ namespace game_câu_cá
                     HuntStep(f, i);
 
                 f.X += f.Speed;
-                f.Y += (float)Math.Sin((frame + f.Phase * 60f) * 0.04f) * 0.25f;
-
+                f.Y += (float)Math.Sin((frame + f.Phase * 60f) * 0.04f) * 0.25f;   
                 if (f.Speed > 0 && f.X > WorldW) f.X = -f.Size * 3;
                 if (f.Speed < 0 && f.X < -f.Size * 3) f.X = WorldW;
 
                 if (hookActive && f.Bounds.IntersectsWith(hookRect))
                     TryHook(f);
             }
-
             if (frame % 2 == 0)
             {
                 Rectangle sepArea = new Rectangle((int)cameraX - 200, (int)cameraY - 200,
                                                   ClientSize.Width + 400, ClientSize.Height + 400);
                 SeparateFish(sepArea);
             }
-
             if (eatenTmp.Count > 0)
             {
                 foreach (Fish d in eatenTmp)
@@ -2370,29 +2205,24 @@ namespace game_câu_cá
                 eatenTmp.Clear();
             }
         }
-
         void TryHook(Fish f)
         {
-            float w = f.Weight * RegionMul(f);
-
-            if (!CanHook(f, w)) return;
-
+            float w = f.Weight * RegionMul(f);   
+            if (!CanHook(f, w)) return;          
             if (HookedCount() >= MaxHooked)
             {
-                if (warnTicks == 0) message = "Hook is full! Reel up.";
+                if (warnTicks == 0) message = "Đã hết chổ chứa vui lòng kéo cần lên.";
                 return;
             }
 
             if (HookedWeight() + w > RodCapacity)
             {
-                if (warnTicks == 0) message = f.Name + " (" + w.ToString("0.0") + " kg) is too heavy for your rod!";
+                if (warnTicks == 0) message = f.Name + " (" + w.ToString("0.0") + " kg) quá nặng so với cần của bạn!";
                 return;
             }
 
-            f.Weight = w;
-            f.Hooked = true;
+            f.Weight = w;               f.Hooked = true;
         }
-
         void UpdateWorldTimers()
         {
             weatherTicks--;
@@ -2406,7 +2236,6 @@ namespace game_câu_cá
             }
             if (weather == Weather.Clear && extrasPresent) ExpireExtras();
         }
-
         void DrawFish(Graphics g, Fish f, int alpha)
         {
             if (alpha < 255) alpha = Math.Max(17, alpha / 17 * 17);
@@ -2416,11 +2245,9 @@ namespace game_câu_cá
             Rectangle r = f.Bounds;
             g.FillEllipse(GetBrush(alpha >= 255 ? f.Color : Color.FromArgb(alpha, f.Color)), r);
         }
-
         void DrawCliff(Graphics g, Cliff c)
         {
             g.FillPolygon(GetBrush(Color.FromArgb(82, 100, 126)), c.Poly);
-
             for (int i = 0; i < c.Steps.Count - 1; i++)
             {
                 Rectangle r = c.Steps[i], n = c.Steps[i + 1];
@@ -2428,14 +2255,12 @@ namespace game_câu_cá
                 int x1 = c.Side == 0 ? r.Right : n.Left;
                 g.FillRectangle(GetBrush(Color.FromArgb(70, 0, 0, 20)), x0, r.Bottom - 10, x1 - x0, 10);
             }
-
             Rectangle top = c.Steps[0];
             g.FillRectangle(GetBrush(Color.FromArgb(206, 200, 172)), top.X, top.Y, top.Width, 12);
             g.FillRectangle(GetBrush(Color.FromArgb(150, 145, 122)), top.X, top.Y + 12, top.Width, 4);
 
             g.DrawPolygon(rockPen, c.Poly);
         }
-
         void DrawCoral(Graphics g, Coral c)
         {
             Rectangle r = c.Rect;
@@ -2444,8 +2269,7 @@ namespace game_câu_cá
                 g.DrawImage(coralImage, r);
             else
             {
-                Random rnd = new Random(c.Seed);
-                int bottom = r.Bottom;
+                Random rnd = new Random(c.Seed);                   int bottom = r.Bottom;
                 int x = r.X + 4;
 
                 while (x < r.Right - 10)
@@ -2475,12 +2299,7 @@ namespace game_câu_cá
                         SolidBrush tip = GetBrush(c.Color);
                         int armY = bottom - h / 2;
 
-                        g.FillRectangle(bb, x + 8, bottom - h, 4, h);
-                        g.FillRectangle(bb, x, armY, 12, 4);
-                        g.FillRectangle(bb, x, armY - 10, 4, 12);
-                        g.FillRectangle(bb, x + 12, armY - 8, 10, 4);
-                        g.FillRectangle(bb, x + 18, armY - 16, 4, 12);
-                        g.FillRectangle(tip, x + 7, bottom - h - 3, 6, 4);
+                        g.FillRectangle(bb, x + 8, bottom - h, 4, h);                                  g.FillRectangle(bb, x, armY, 12, 4);                                            g.FillRectangle(bb, x, armY - 10, 4, 12);                                       g.FillRectangle(bb, x + 12, armY - 8, 10, 4);                                   g.FillRectangle(bb, x + 18, armY - 16, 4, 12);                                  g.FillRectangle(tip, x + 7, bottom - h - 3, 6, 4);
                         g.FillRectangle(tip, x - 1, armY - 13, 6, 4);
                         g.FillRectangle(tip, x + 17, armY - 19, 6, 4);
 
@@ -2517,8 +2336,7 @@ namespace game_câu_cá
 
         void DrawChest(Graphics g, Chest c)
         {
-            if (DrawChestSprite(g, c)) return;
-
+            if (DrawChestSprite(g, c)) return;     
             Rectangle r = c.Bounds;
             int lidH = r.Height / 3;
             Rectangle body = new Rectangle(r.X, r.Y + lidH, r.Width, r.Height - lidH);
@@ -2555,7 +2373,6 @@ namespace game_câu_cá
                 g.DrawPolygon(goldPen, open);
             }
         }
-
         void DrawJelly(Graphics g, Hazard h)
         {
             int bellH = (int)(h.H * 0.55f);
@@ -2563,7 +2380,6 @@ namespace game_câu_cá
             int bw = h.W + (int)pulse;
             int bx = (int)(h.X - pulse / 2f);
             int by = (int)h.Y;
-
             float y0 = h.Y + bellH - 2;
             float yEnd = h.Y + h.H;
             float yMid = y0 + (yEnd - y0) / 2f;
@@ -2575,18 +2391,15 @@ namespace game_câu_cá
                 g.DrawLine(jellyTentPen, tx, y0, tx + sway1, yMid);
                 g.DrawLine(jellyTentPen, tx + sway1, yMid, tx + sway2, yEnd);
             }
-
             g.FillPie(GetBrush(Color.FromArgb(185, 190, 110, 240)), bx, by, bw, bellH * 2, 180, 180);
             g.FillPie(GetBrush(Color.FromArgb(120, 240, 190, 255)), bx + 6, by + 4, bw - 12, (bellH - 4) * 2, 180, 180);
             g.FillEllipse(GetBrush(Color.FromArgb(200, 255, 255, 255)), bx + bw / 3 - 2, by + bellH / 2, 4, 4);
             g.FillEllipse(GetBrush(Color.FromArgb(200, 255, 255, 255)), bx + 2 * bw / 3 - 2, by + bellH / 2 + 3, 3, 3);
         }
-
         void DrawMine(Graphics g, Hazard h)
         {
             float cx = h.X + h.W / 2f, cy = h.Y + h.H / 2f;
             float r = 22f;
-
             for (int a = 0; a < 360; a += 45)
             {
                 double rad = a * Math.PI / 180.0;
@@ -2595,15 +2408,12 @@ namespace game_câu_cá
                 g.DrawLine(mineSpikePen, x1, y1, x2, y2);
                 g.FillEllipse(GetBrush(Color.FromArgb(201, 80, 58)), x2 - 5, y2 - 5, 10, 10);
             }
-
             g.DrawLine(artOutline, cx, cy + r, cx, h.Y + h.H);
-
             g.FillEllipse(GetBrush(Color.FromArgb(90, 93, 104)), cx - r, cy - r, r * 2, r * 2);
             g.FillPie(GetBrush(Color.FromArgb(138, 142, 154)), cx - r + 4, cy - r + 4, r * 2 - 8, r * 2 - 8, 200, 90);
             g.FillRectangle(GetBrush(Color.FromArgb(122, 125, 136)), cx - 12, cy - 3, 24, 6);
             g.FillRectangle(GetBrush(Color.FromArgb(122, 125, 136)), cx - 12, cy + 10, 24, 3);
             g.DrawEllipse(mineBodyPen, cx - r, cy - r, r * 2, r * 2);
-
             Color light = (frame / 20) % 2 == 0 ? Color.OrangeRed : Color.FromArgb(120, 40, 10);
             g.FillEllipse(GetBrush(light), cx - 5, cy - 5, 10, 10);
         }
@@ -2620,7 +2430,6 @@ namespace game_câu_cá
                     DrawMine(g, h);
             }
         }
-
         void DrawPredators(Graphics g)
         {
             foreach (Predator p in predators)
@@ -2629,8 +2438,7 @@ namespace game_câu_cá
                 if (PredatorSpriteRect(p, out outline))
                 {
                     DrawPredatorSprite(g, p);
-                    g.DrawRectangle(predOutlinePen, outline);
-                }
+                    g.DrawRectangle(predOutlinePen, outline);                   }
                 else
                 {
                     g.FillRectangle(GetBrush(Color.FromArgb(70, 255, 0, 0)), p.Bounds);
@@ -2638,43 +2446,35 @@ namespace game_câu_cá
                 }
             }
         }
-
         void DrawPredBanner(Graphics g)
         {
             if (predBannerTicks <= 0) return;
 
             int elapsed = PredBannerTime - predBannerTicks;
-            float a = Math.Min(1f, Math.Min(elapsed / 15f, predBannerTicks / 30f));
-            int alpha = (int)(255 * a);
-
+            float a = Math.Min(1f, Math.Min(elapsed / 15f, predBannerTicks / 30f));               int alpha = (int)(255 * a);
             Rectangle r = new Rectangle(0, ClientSize.Height / 2 - 170, ClientSize.Width, 100);
             Rectangle shadow = new Rectangle(r.X + 3, r.Y + 3, r.Width, r.Height);
             Rectangle sub = new Rectangle(0, r.Bottom - 5, ClientSize.Width, 36);
 
             g.DrawString(predBannerText, fontPredBanner, GetBrush(Color.FromArgb(alpha / 2, 0, 0, 0)), shadow, centerFmt);
             g.DrawString(predBannerText, fontPredBanner, GetBrush(Color.FromArgb(alpha, 230, 30, 30)), r, centerFmt);
-            g.DrawString("Reel up or leave this zone!", fontRow, GetBrush(Color.FromArgb(alpha, 255, 255, 255)), sub, centerFmt);
+            g.DrawString("Kéo lên hoặc rời khỏi khu vực này!", fontRow, GetBrush(Color.FromArgb(alpha, 255, 255, 255)), sub, centerFmt);
         }
-
         void Px(Graphics g, int x, int y, int w, int h, Color c)
         {
             g.FillRectangle(GetBrush(c), x, y, w, h);
             g.DrawRectangle(artOutline, x, y, w, h);
         }
-
         void DrawShopArt(Graphics g, Rectangle r, bool sell)
         {
             int x = r.X, y = r.Y;
             Color wood = Color.FromArgb(107, 74, 46);
             Color awnA = sell ? Color.FromArgb(200, 68, 60) : Color.FromArgb(60, 122, 200);
             Color awnB = Color.FromArgb(242, 230, 208);
-
             Px(g, x + 6, y + 22, r.Width - 13, r.Height - 23, Color.FromArgb(74, 58, 82));
             Px(g, x + 6, y + 16, 4, r.Height - 17, wood);
             Px(g, x + r.Width - 10, y + 16, 4, r.Height - 17, wood);
-
             Px(g, x + 12, y + 48, r.Width - 25, 4, Color.FromArgb(138, 98, 56));
-
             int cx = x + r.Width / 2;
             Px(g, cx - 7, y + 40, 14, 30, Color.FromArgb(59, 110, 165));
             Px(g, cx - 6, y + 30, 12, 11, Color.FromArgb(240, 200, 160));
@@ -2721,17 +2521,14 @@ namespace game_câu_cá
                 g.FillEllipse(Brushes.DimGray, x + 65, y + 61, 6, 6);
                 Px(g, x + 128, y + 56, 10, 14, Color.FromArgb(232, 224, 200));
             }
-
             Px(g, x + 4, y + 70, r.Width - 9, r.Height - 71, Color.FromArgb(154, 107, 60));
             Px(g, x + 4, y + 70, r.Width - 9, 5, Color.FromArgb(193, 143, 85));
-
             int n = 10, sw = (r.Width - 8) / n;
             for (int i = 0; i < n; i++)
             {
                 SolidBrush b = GetBrush(i % 2 == 0 ? awnA : awnB);
                 g.FillRectangle(b, x + 4 + i * sw, y + 6, sw, 15);
-                g.FillPie(b, x + 4 + i * sw, y + 16, sw, 10, 0, 180);
-            }
+                g.FillPie(b, x + 4 + i * sw, y + 16, sw, 10, 0, 180);               }
             Px(g, x + 4, y + 3, r.Width - 8, 4, wood);
         }
 
@@ -2739,12 +2536,11 @@ namespace game_câu_cá
         {
             if (img != null) { DrawShopImage(g, r, img, near); return; }
 
-            DrawShopArt(g, r, label == "SELL");
+            DrawShopArt(g, r, label == "Cửa hàng bán cá");
 
             using (Pen p = new Pen(near ? Color.Gold : Color.Black, near ? 4 : 2))
                 g.DrawRectangle(p, r);
         }
-
         void DrawDock(Graphics g)
         {
             for (int x = 30; x < DockW; x += 130)
@@ -2760,8 +2556,7 @@ namespace game_câu_cá
 
         void DrawBoat(Graphics g, bool near)
         {
-            if (DrawBoatSprite(g, near)) return;
-
+            if (DrawBoatSprite(g, near)) return;    
             int x = (int)boatX;
             int top = DockTop;
             Point[] hull =
@@ -2783,10 +2578,10 @@ namespace game_câu_cá
         string SpotPrompt(int spot)
         {
             if (spot == 0) return "Ấn E hoặc nhấp chuột để bán";
-            if (spot == 1) return "Ấn E hoặc nhấp chuột để mở cửa hàng";
-            if (onBoat) return "Ấn E để xuống tàu";
-            if (boatOwned) return "Ấn E để lên tàu";
-            return "Ấn E để mua tàu ($" + BoatPrice + ") ";
+            if (spot == 1) return "Ấn E (hoặc nhấp chuột) để mở cửa hàng";
+            if (onBoat) return "Ấn E để xuống thuyền";
+            if (boatOwned) return "Ấn E để lên thuyền";
+            return "Ấn E để mua thuyền ($" + BoatPrice + ").";
         }
 
         void DrawRain(Graphics g)
@@ -2808,7 +2603,6 @@ namespace game_câu_cá
             }
             g.ResetClip();
         }
-
         float DepthDarkness(float y)
         {
             float d = y - WaterTop;
@@ -2824,7 +2618,6 @@ namespace game_câu_cá
             }
             return darkLevels[darkLevels.Length - 1];
         }
-
         void UpdateLighting()
         {
             float centerY = cameraY + ClientSize.Height / 2f;
@@ -2840,7 +2633,6 @@ namespace game_câu_cá
             if (stormF > 0.02f) r = Math.Max(r, 250f);
             lightRadius = r;
         }
-
         PointF LightWorldPos()
         {
             if (state == State.Idle || state == State.Charging)
@@ -2863,14 +2655,12 @@ namespace game_câu_cá
             using (GraphicsPath ell = new GraphicsPath())
             {
                 ell.AddEllipse(lx - radius, ly - radius, radius * 2, radius * 2);
-
                 using (GraphicsPath full = new GraphicsPath())
                 {
                     full.AddRectangle(screen);
                     full.AddPath(ell, false);
                     g.FillPath(GetBrush(Color.FromArgb(alpha, 0, 0, 0)), full);
                 }
-
                 using (PathGradientBrush pg = new PathGradientBrush(ell))
                 {
                     pg.CenterColor = Color.FromArgb(0, 0, 0, 0);
@@ -2880,14 +2670,12 @@ namespace game_câu_cá
                 }
             }
         }
-
         void DrawZoneBanner(Graphics g)
         {
             if (zoneBannerTicks <= 0 || zoneBannerZone < 0) return;
 
             int elapsed = ZoneBannerTime - zoneBannerTicks;
-            float a = Math.Min(1f, Math.Min(elapsed / 20f, zoneBannerTicks / 30f));
-            int alpha = (int)(255 * a);
+            float a = Math.Min(1f, Math.Min(elapsed / 20f, zoneBannerTicks / 30f));               int alpha = (int)(255 * a);
 
             Rectangle r = new Rectangle(0, ClientSize.Height / 2 - 60, ClientSize.Width, 120);
             Rectangle shadow = new Rectangle(r.X + 3, r.Y + 3, r.Width, r.Height);
@@ -2906,14 +2694,14 @@ namespace game_câu_cá
         string PredatorInfo(int z)
         {
             if (z == 0)
-                return "Piranha (Surface): " + (PredImmune(0) ? "tránh" : (int)Math.Round(PiranhaStealChance() * 100) + "% để lấy một con cá")
-                       + "     [Bỏ qua ở 10 nâng cấp]";
+                return "Piranha (Surface): " + (PredImmune(0) ? "Chống" : (int)Math.Round(PiranhaStealChance() * 100) + "% lấy mất cá")
+                       + "     [bị bỏ qua ở 10 upgrades]";
             if (z == 1)
-                return "Eel (Mid): " + (PredImmune(1) ? "tránh" : (int)Math.Round(EelCutChance() * 100) + "% cắt dây câu ")
-                       + "     [Bỏ qua ở 20 nâng cấp ]";
+                return "Eel (Mid): " + (PredImmune(1) ? "Chống" : (int)Math.Round(EelCutChance() * 100) + "% để cắt dây câu")
+                       + "     [Bị bỏ qua ở 20 upgrades]";
             if (z == 2)
-                return "Shark (Deep): Lấy " + (int)Math.Round(SharkFraction() * 100) + "% of your catch";
-            return "??? (Abyss): Lấy toàn bộ cá của bạn";
+                return "Shark (Deep): lấy " + (int)Math.Round(SharkFraction() * 100) + "% cá của bạn";
+            return "??? (Abyss): lấy toàn bộ cá của bạn";
         }
 
         void DrawButton(Graphics g, Rectangle r, string text, Color col, Font font)
@@ -2924,11 +2712,10 @@ namespace game_câu_cá
             g.DrawRectangle(Pens.White, r);
             g.DrawString(text, font, Brushes.White, r, centerFmt);
         }
-
         string RodFilterText(int i)
         {
             int mz = rodMinZone[i];
-            string zones = mz == 0 ? "all zones" : "skips " + (mz == 1 ? "Surface" : "Surface + Mid");
+            string zones = mz == 0 ? "all zones" : "Bỏ qua cá " + (mz == 1 ? "Surface" : "Surface + Mid");
             return zones;
         }
 
@@ -2938,10 +2725,10 @@ namespace game_câu_cá
             g.FillRectangle(GetBrush(Color.FromArgb(240, 30, 30, 40)), p);
             g.DrawRectangle(Pens.White, p);
 
-            g.DrawString("GEAR SHOP      Money: $" + money, fontTitle, Brushes.White, p.X + 15, p.Y + 14);
+            g.DrawString("Tiệm bán đồ            Tiền: $" + money, fontTitle, Brushes.White, p.X + 15, p.Y + 14);
             DrawButton(g, GearClose, "X", GearClose.Contains(mousePos) ? Color.Firebrick : Color.DarkRed, fontRow);
 
-            string[] tabNames = { "ROD", "LINE", "BAIT" };
+            string[] tabNames = { "cần câu", "dây câu", "mồi" };
             for (int i = 0; i < 3; i++)
             {
                 Color tc = i == shopTab ? Color.FromArgb(255, 184, 134, 11) : Color.FromArgb(255, 70, 70, 90);
@@ -2956,14 +2743,11 @@ namespace game_câu_cá
             else DrawBaitTab(g, p, out btnText, out btnCol);
 
             DrawButton(g, GearBuyBtn, btnText, btnCol, fontRow);
-
-            g.DrawString("Rod: " + rodNames[rodLevel] + " (" + RodCapacity + " kg, " + MaxHooked + " fish)" +
-                         "     Line: " + (int)(LineLength / 10) + " m (" + lineUpgrades + "/" + MaxUpgrades + ")" +
-                         "     Glow bait: " + (hasGlowBait ? "yes" : "no"),
+            g.DrawString("Cần câu: " + rodNames[rodLevel] + " (" + RodCapacity + " kg, " + MaxHooked + " cá)" +
+                         "     dây câu: " + (int)(LineLength / 10) + " m (" + lineUpgrades + "/" + MaxUpgrades + ")" +
+                         "     mồi phát sáng: " + (hasGlowBait ? "sỡ hữu" : "chưa sỡ hữu"),
                          fontSmall, Brushes.White, p.X + 15, p.Bottom - 70);
             g.DrawString(message, fontSmall, Brushes.Gold, p.X + 15, p.Bottom - 46);
-            g.DrawString("Mouse: click a tab or row, then BUY.   Keys: A/D = tab, W/S = select, Enter = buy, Esc = close",
-                         fontSmall, Brushes.LightGray, p.X + 15, p.Bottom - 24);
         }
 
         void DrawRodTab(Graphics g, Rectangle p, out string btnText, out Color btnCol)
@@ -2979,30 +2763,30 @@ namespace game_câu_cá
 
                 string status;
                 Brush color;
-                if (i < rodLevel) { status = "OWNED"; color = Brushes.Gray; }
-                else if (i == rodLevel) { status = "EQUIPPED"; color = Brushes.LimeGreen; }
+                if (i < rodLevel) { status = "Sở hữu"; color = Brushes.Gray; }
+                else if (i == rodLevel) { status = "Đang dùng"; color = Brushes.LimeGreen; }
                 else if (i == rodLevel + 1)
                 {
                     status = "$" + rodPrice[i];
                     color = money >= rodPrice[i] ? Brushes.Gold : Brushes.OrangeRed;
                 }
-                else { status = "LOCKED"; color = Brushes.DimGray; }
+                else { status = "Khóa"; color = Brushes.DimGray; }
 
                 g.DrawString((i + 1) + ". " + rodNames[i], fontRow, color, r.X + 8, r.Y + 5);
-                g.DrawString(rodCapacity[i] + " kg, " + (3 + i) + " fish, " + RodFilterText(i), fontRow, color, r.X + 230, r.Y + 5);
+                g.DrawString(rodCapacity[i] + " kg, " + (3 + i) + " cá, " + RodFilterText(i), fontRow, color, r.X + 230, r.Y + 5);
                 g.DrawString(status, fontRow, color, r.X + 600, r.Y + 5);
             }
 
-            if (shopSel < rodLevel) { btnText = "OWNED"; btnCol = Color.Gray; }
-            else if (shopSel == rodLevel) { btnText = "EQUIPPED"; btnCol = Color.SeaGreen; }
+            if (shopSel < rodLevel) { btnText = "Sở hữu"; btnCol = Color.Gray; }
+            else if (shopSel == rodLevel) { btnText = "đang dùng"; btnCol = Color.SeaGreen; }
             else if (shopSel == rodLevel + 1)
             {
-                btnText = "BUY " + rodNames[shopSel] + "  -  $" + rodPrice[shopSel];
+                btnText = "Mua " + rodNames[shopSel] + "  -  $" + rodPrice[shopSel];
                 btnCol = money >= rodPrice[shopSel] ? Color.SeaGreen : Color.Firebrick;
             }
             else
             {
-                btnText = "LOCKED - buy the " + rodNames[rodLevel + 1] + " first";
+                btnText = "Khóa - vui lòng mua " + rodNames[rodLevel + 1] + " trước";
                 btnCol = Color.DimGray;
             }
         }
@@ -3011,10 +2795,9 @@ namespace game_câu_cá
         {
             int meters = (int)(LineLength / 10);
             int maxMeters = (int)(MaxLineLength / 10);
-            g.DrawString("Line length: " + meters + " m / " + maxMeters + " m", fontTitle, Brushes.White, p.X + 20, p.Y + 110);
-            g.DrawString("Upgrades: " + lineUpgrades + " / " + MaxUpgrades + "        Reaches: " + zoneNames[depthLevel - 1] + " zone",
+            g.DrawString("tầm dây câu: " + meters + " m / " + maxMeters + " m", fontTitle, Brushes.White, p.X + 20, p.Y + 110);
+            g.DrawString("Nâng cấp: " + lineUpgrades + " / " + MaxUpgrades + "        Có thể đến: " + zoneNames[depthLevel - 1] ,
                          fontRow, Brushes.Gold, p.X + 20, p.Y + 145);
-
             Rectangle bar = new Rectangle(p.X + 20, p.Y + 215, p.Width - 40, 30);
             float total = WorldBottom - WaterTop;
             for (int z = 0; z < ZoneCount; z++)
@@ -3029,7 +2812,7 @@ namespace game_câu_cá
             g.DrawLine(goldPen, reach, bar.Y - 6, reach, bar.Bottom + 6);
             g.DrawRectangle(Pens.White, bar);
 
-            g.DrawString("Every upgrade adds " + (int)(LinePerUpgrade / 10) + " m of line and makes predators weaker:", fontSmall, Brushes.White, p.X + 20, p.Y + 290);
+            g.DrawString("Mỗi nâng cấp tăng " + (int)(LinePerUpgrade / 10) + " m dây câu và làm cá yếu hơn:", fontSmall, Brushes.White, p.X + 20, p.Y + 290);
             for (int z = 0; z < ZoneCount; z++)
             {
                 Brush pc = (z <= 1 && PredImmune(z)) ? Brushes.LimeGreen : Brushes.LightGray;
@@ -3038,12 +2821,12 @@ namespace game_câu_cá
 
             if (lineUpgrades >= MaxUpgrades)
             {
-                btnText = "LINE MAXED";
+                btnText = "Đã đến giới hạn";
                 btnCol = Color.Gray;
             }
             else
             {
-                btnText = "UPGRADE LINE  (+" + (int)(LinePerUpgrade / 10) + " m)  -  $" + UpgradeCost;
+                btnText = "Nâng cấp dây  (+" + (int)(LinePerUpgrade / 10) + " m)  -  $" + UpgradeCost;
                 btnCol = money >= UpgradeCost ? Color.SeaGreen : Color.Firebrick;
             }
         }
@@ -3054,24 +2837,17 @@ namespace game_câu_cá
             g.FillRectangle(GetBrush(Color.FromArgb(90, 255, 215, 0)), r);
 
             Brush c = hasGlowBait ? Brushes.LimeGreen : (money >= GlowPrice ? Brushes.Gold : Brushes.OrangeRed);
-            g.DrawString("1. Glow Bait  (PREMIUM)", fontRow, c, r.X + 8, r.Y + 5);
-            g.DrawString(hasGlowBait ? "OWNED" : "$" + GlowPrice, fontRow, c, r.X + 560, r.Y + 5);
-
-            g.DrawString("A big circle of light follows your hook. Fish only show up when they swim into it.", fontSmall, Brushes.White, p.X + 20, p.Y + 150);
-            g.DrawString("Without it you only see a tiny circle around the hook once it gets dark.", fontSmall, Brushes.White, p.X + 20, p.Y + 175);
-            g.DrawString("One-time purchase: you keep it forever, no need to buy it again.", fontSmall, Brushes.White, p.X + 20, p.Y + 200);
-
-            btnText = hasGlowBait ? "OWNED" : "BUY GLOW BAIT  -  $" + GlowPrice;
+            g.DrawString("1. Mồi phát sáng", fontRow, c, r.X + 8, r.Y + 5);
+            g.DrawString(hasGlowBait ? "Sở hữu  " : "$" + GlowPrice, fontRow, c, r.X + 560, r.Y + 5);
+            btnText = hasGlowBait ? "Sở hữu" : "Mua mồi phát sáng  -  $" + GlowPrice;
             btnCol = hasGlowBait ? Color.Gray : (money >= GlowPrice ? Color.SeaGreen : Color.Firebrick);
         }
 
         [DllImport("winmm.dll", CharSet = CharSet.Auto)]
         static extern int mciSendString(string command, StringBuilder ret, int retLen, IntPtr hwnd);
-
         float IdleCamY() { return Math.Max(0f, DockTop - ClientSize.Height * 0.5f); }
 
         void ClearKeys() { leftPressed = rightPressed = downPressed = upPressed = false; }
-
         void PlayBeep(int freq, int ms)
         {
             System.Threading.ThreadPool.QueueUserWorkItem(delegate
@@ -3142,18 +2918,18 @@ namespace game_câu_cá
             string title, text;
             if (popup == 1)
             {
-                title = "WATCH OUT: JELLYFISH!";
-                text = "Touching a jellyfish shocks your hook.\n\nYou lose one fish from your hook and the hook is pushed up. Steer around them with A / D!";
+                title = "Cẩn thận sứa biển!!";
+                text = "Chạm vào sứa sẽ giật dây câu của bạn .\n\nBạn sẽ mất một con cá và bị đẩy lên.Tránh chúng với  A / D!";
             }
             else
             {
-                title = "WATCH OUT: SEA MINE!";
-                text = "A sea mine explodes when your hook touches it.\n\nIt blows away half of your catch and throws your hook far up. Keep your distance!";
+                title = "Cẩn thận sea mine";
+                text = "sea mine sẽ phát nổ nêu bạn chạm vào nó.\n\nsea mine nổ sẽ làm bạn mất 25% cá và bị đẩy lên cao.Tránh chúng với A / D!";
             }
 
             g.DrawString(title, fontTitle, Brushes.Gold, new Rectangle(b.X, b.Y + 16, b.Width, 36), centerFmt);
             g.DrawString(text, fontRow, Brushes.White, new Rectangle(b.X + 30, b.Y + 62, b.Width - 60, 110));
-            DrawButton(g, PopupBtn, "Got it", Color.SeaGreen, fontRow);
+            DrawButton(g, PopupBtn, "Biết rồi", Color.SeaGreen, fontRow);
             g.DrawString("Enter or click to continue", fontTiny, Brushes.LightGray,
                          new Rectangle(b.X, b.Bottom - 22, b.Width, 18), centerFmt);
         }
@@ -3162,15 +2938,12 @@ namespace game_câu_cá
         {
             foreach (Boom b in booms)
             {
-                float t = 1f - (float)b.Life / BoomTicks;
-                int a = (int)(255 * (1f - t));
+                float t = 1f - (float)b.Life / BoomTicks;                      int a = (int)(255 * (1f - t));
                 if (a < 0) a = 0;
-
                 float rad = 20f + t * 80f;
                 g.FillEllipse(GetBrush(Color.FromArgb(a * 6 / 10, 255, 140, 0)), b.X - rad, b.Y - rad, rad * 2, rad * 2);
                 using (Pen ring = new Pen(Color.FromArgb(a, 255, 60, 0), 4))
                     g.DrawEllipse(ring, b.X - rad, b.Y - rad, rad * 2, rad * 2);
-
                 int dx = (int)(Math.Sin(frame * 2.1) * 5);
                 int dy = (int)(Math.Cos(frame * 1.7) * 5);
                 Rectangle r = new Rectangle((int)b.X - 160 + dx, (int)(b.Y - 30 - t * 30) + dy, 320, 60);
@@ -3179,7 +2952,6 @@ namespace game_câu_cá
                 g.DrawString("BOOM!!", fontBoom, GetBrush(Color.FromArgb(a, 255, 190, 30)), r, centerFmt);
             }
         }
-
         void DrawHookCounter(Graphics g)
         {
             int n = HookedCount();
@@ -3188,8 +2960,7 @@ namespace game_câu_cá
             SizeF sz = g.MeasureString(text, fontLabel);
 
             float x = hookX + HookSize + 8;
-            if (x + sz.Width + 6 > WorldW) x = hookX - sz.Width - 10;
-            float y = hookY + HookSize / 2f - sz.Height / 2f;
+            if (x + sz.Width + 6 > WorldW) x = hookX - sz.Width - 10;               float y = hookY + HookSize / 2f - sz.Height / 2f;
 
             g.FillRectangle(GetBrush(Color.FromArgb(175, 20, 20, 30)), x - 4, y - 1, sz.Width + 6, sz.Height + 2);
             g.DrawString(text, fontLabel, full ? Brushes.OrangeRed : Brushes.White, x, y);
@@ -3225,9 +2996,10 @@ namespace game_câu_cá
             {
                 if (PauseBtn(0).Contains(p)) ClosePause();
                 else if (PauseBtn(1).Contains(p)) { pauseView = 1; pauseMsg = ""; confirmSave = false; }
-                else if (PauseBtn(2).Contains(p)) SaveClicked();
-                else if (PauseBtn(3).Contains(p)) { confirmSave = false; LoadGame(); }
+                else if (PauseBtn(2).Contains(p)) { if (gameMode == GameMode.Casual) SaveClicked(); else pauseMsg = "Chỉ dùng được ở chế độ Thường."; }
+                else if (PauseBtn(3).Contains(p)) { confirmSave = false; if (gameMode == GameMode.Casual) LoadGame(); else pauseMsg = "Chỉ dùng được ở chế độ Thường."; }
                 else if (PauseBtn(4).Contains(p)) { pauseView = 2; pauseMsg = ""; confirmSave = false; }
+                else if (PauseBtn(5).Contains(p)) BackToMenu();
             }
             else if (pauseView == 1)
             {
@@ -3260,6 +3032,7 @@ namespace game_câu_cá
                 DrawButton(g, PauseBtn(2), confirmSave ? "Overwrite save?" : "Save", confirmSave ? Color.Firebrick : Color.FromArgb(255, 70, 70, 100), fontRow);
                 DrawButton(g, PauseBtn(3), "Load", Color.FromArgb(255, 70, 70, 100), fontRow);
                 DrawButton(g, PauseBtn(4), "Progress", Color.FromArgb(255, 70, 70, 100), fontRow);
+                DrawButton(g, PauseBtn(5), "Về menu chính", Color.FromArgb(255, 150, 60, 60), fontRow);
                 g.DrawString("Esc = resume", fontTiny, Brushes.LightGray, new Rectangle(p.X, p.Bottom - 26, p.Width, 18), centerFmt);
             }
             else if (pauseView == 1)
@@ -3404,7 +3177,6 @@ namespace game_câu_cá
                 musicOn = Gi(d, "musicOn", musicOn ? 1 : 0) == 1;
                 musicVol = Math.Max(0, Math.Min(Gi(d, "musicVol", musicVol), 100));
                 ApplyMusic();
-
                 foreach (Fish f in fishes) f.Hooked = false;
                 ResetPredatorState();
                 shopOpen = false;
@@ -3433,40 +3205,37 @@ namespace game_câu_cá
         {
             base.OnPaint(e);
             Graphics g = e.Graphics;
+            if (menuOpen) { DrawMainMenu(g); return; }
 
             UpdateLighting();
-
             Rectangle view = new Rectangle((int)cameraX - 150, (int)cameraY - 150,
                                            ClientSize.Width + 300, ClientSize.Height + 300);
-
             g.TranslateTransform(-cameraX, -cameraY);
             DrawWorld(g, view);
-
             g.ResetTransform();
             DrawRain(g);
             if (!devSeeAll) DrawDarkness(g);
             DrawPowerBar(g);
-            DrawInterface(g);
+            DrawInterface(g);                DrawMiniHud(g);
+            DrawWorldEventBox(g);
             DrawZoneBanner(g);
             DrawPredBanner(g);
             if (Dev) DrawDevPanel(g);
 
-            if (shopOpen) DrawGearShop(g);
-            if (helpOpen) DrawHelp(g);
+            if (shopOpen) DrawGearShop(g);               if (helpOpen) DrawHelp(g);
             if (pauseOpen) DrawPauseMenu(g);
             if (popup != 0) DrawPopup(g);
+            DrawModeScreens(g);
         }
 
         void DrawWorld(Graphics g, Rectangle view)
         {
             DrawSkyAndWater(g, view);
-
             foreach (Cliff c in cliffs)
                 if (view.IntersectsWith(c.Bounds)) DrawCliff(g, c);
 
             foreach (Coral c in corals)
                 if (view.IntersectsWith(Rectangle.Inflate(c.Rect, 0, 70))) DrawCoral(g, c);
-
             foreach (Chest c in chests)
                 if (view.IntersectsWith(c.Bounds)) DrawChest(g, c);
 
@@ -3474,16 +3243,13 @@ namespace game_câu_cá
             DrawHazards(g, view);
             DrawBooms(g);
             DrawPredators(g);
-
             int spot = state == State.Idle ? NearestSpot() : -1;
             DrawDock(g);
             DrawShopBox(g, SellBox, sellImage, "SELL", spot == 0);
             DrawShopBox(g, GearBox, gearImage, "GEAR", spot == 1);
             DrawBoat(g, spot == 2);
-
             if (packReady)
-                DrawFishermanScene(g);
-            else
+                DrawFishermanScene(g);                  else
             {
                 g.FillRectangle(Brushes.OrangeRed, CharacterRect);
 
@@ -3494,7 +3260,6 @@ namespace game_câu_cá
                 g.FillEllipse(Brushes.Silver, hookX, hookY, HookSize, HookSize);
             }
             if (state == State.Sinking || state == State.Reeling) DrawHookCounter(g);
-
             if (spot >= 0 && !shopOpen)
             {
                 string prompt = SpotPrompt(spot);
@@ -3510,7 +3275,6 @@ namespace game_câu_cá
                            : weather == Weather.Rain ? Color.FromArgb(130, 150, 170)
                            : Color.LightSkyBlue;
             g.FillRectangle(GetBrush(skyColor), Rectangle.Intersect(new Rectangle(0, 0, WorldW, WaterTop), view));
-
             for (int z = 0; z < ZoneCount; z++)
             {
                 Rectangle band = new Rectangle(0, ZoneTopY(z), WorldW, ZoneBottomY(z) - ZoneTopY(z));
@@ -3520,7 +3284,6 @@ namespace game_câu_cá
                 g.DrawLine(dividerPen, view.Left, band.Y, view.Right, band.Y);
             }
         }
-
         void DrawAllFish(Graphics g, Rectangle view)
         {
             float outsideA = Math.Max(0f, Math.Min(1f, 1f - (darkLevel - 0.35f) / 0.2f));
@@ -3539,9 +3302,7 @@ namespace game_câu_cá
                     float dy = f.Y + f.Size / 2f - lp.Y;
                     if (dx * dx + dy * dy > lr2)
                     {
-                        if (outsideA <= 0.03f) continue;
-                        a = (int)(255 * outsideA);
-                    }
+                        if (outsideA <= 0.03f) continue;                             a = (int)(255 * outsideA);                               }
                 }
                 DrawFish(g, f, a);
             }
